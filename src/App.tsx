@@ -4,6 +4,8 @@ import { AuthProvider } from "@/lib/auth";
 import Layout from "@/components/Layout";
 import Home from "@/pages/Home";
 import Templates from "@/pages/Templates";
+import PreviewFrame from "@/pages/PreviewFrame";
+import InvitePage from "@/pages/Invite";
 
 export default function App() {
   return (
@@ -14,6 +16,9 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/templates" element={<Templates />} />
           </Route>
+          <Route path="/templates/:id/preview-frame" element={<PreviewFrame />} />
+          <Route path="/i/:slug" element={<InvitePage />} />
+          <Route path="/invite/:slug" element={<InvitePage />} />
           <Route path="*" element={<div className="p-24 text-center text-sm">404 — sahifa topilmadi</div>} />
         </Routes>
       </AuthProvider>

@@ -1,0 +1,24 @@
+.t-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:999px; border:0; cursor:pointer; background:var(--t-accent); color:var(--t-bg); font-weight:700; font-size:14px; padding:12px 24px; transition:transform .2s; }
+.t-btn:hover { transform:translateY(-2px); }
+.t-btn-ghost { display:inline-flex; align-items:center; justify-content:center; border-radius:999px; cursor:pointer; background:transparent; border:1px solid var(--t-line); color:var(--t-ink); font-weight:600; font-size:14px; padding:11px 22px; }
+.t-input { width:100%; border-radius:10px; border:1px solid var(--t-line); background:var(--t-surface); padding:11px 14px; font-size:14px; color:var(--t-ink); outline:none; }
+.t-input:focus { border-color:var(--t-accent); }
+.t-input::placeholder { color:var(--t-muted); }
+.t-card { background:var(--t-surface); border:1px solid var(--t-line); border-radius:16px; }
+.t-eyebrow { font-size:11px; letter-spacing:.3em; text-transform:uppercase; font-weight:700; color:var(--t-accent); }
+.t-divider { display:flex; align-items:center; gap:14px; color:var(--t-accent); }
+.t-divider::before, .t-divider::after { content:""; height:1px; flex:1; background:linear-gradient(90deg, transparent, var(--t-line), transparent); }
+.t-tile { display:flex; flex-direction:column; align-items:center; gap:6px; padding:14px 10px; min-width:70px; border-radius:12px; border:1px solid var(--t-line); background:var(--t-surface); }
+.t-tile b { font-family:var(--t-serif); font-size:1.8rem; color:var(--t-accent); font-weight:600; }
+.t-tile span { font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--t-muted); }
+.t-seal { position:relative; width:84px; height:84px; border-radius:999px; border:0; cursor:pointer; background:var(--t-accent); color:var(--t-bg); font-size:28px; display:flex; align-items:center; justify-content:center; }
+.t-seal::after { content:""; position:absolute; inset:-10px; border-radius:999px; border:1px solid var(--t-accent); opacity:.6; animation:t-pulse 2s ease-out infinite; }
+@keyframes t-pulse { 0% { transform:scale(.9); opacity:.8; } 100% { transform:scale(1.35); opacity:0; } }
+.t-music { position:fixed; right:16px; bottom:16px; z-index:40; width:50px; height:50px; border-radius:999px; border:1px solid var(--t-accent); background:transparent; color:var(--t-accent); display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; backdrop-filter:blur(6px); }
+.t-spin { display:inline-block; animation:t-spin 4s linear infinite; }
+@keyframes t-spin { to { transform:rotate(360deg); } }
+.t-particle { position:absolute; bottom:-12px; border-radius:999px; background:var(--t-accent); opacity:0; animation:t-rise linear infinite; }
+@keyframes t-rise { 0% { transform:translateY(0); opacity:0; } 12% { opacity:.4; } 88% { opacity:.2; } 100% { transform:translateY(-108vh); opacity:0; } }
+.t-gallery button { overflow:hidden; border-radius:12px; border:1px solid var(--t-line); aspect-ratio:1; padding:0; cursor:pointer; }
+.t-gallery img { width:100%; height:100%; object-fit:cover; }
+.t-step { width:32px; height:32px; border-radius:999px; border:1px solid var(--t-line); background:transparent; color:var(--t-ink); cursor:pointer; }

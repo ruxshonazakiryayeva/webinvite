@@ -1,19 +1,22 @@
 import { Routes, Route } from "react-router-dom";
+import { LangProvider } from "@/lib/i18n";
+import { AuthProvider } from "@/lib/auth";
+import Layout from "@/components/Layout";
+import Home from "@/pages/Home";
+import Templates from "@/pages/Templates";
 
 export default function App() {
   return (
-    <Routes>
-      <Route
-        path="*"
-        element={
-          <div className="grid min-h-screen place-items-center" style={{ background: "var(--bg)", color: "var(--ink)" }}>
-            <div className="text-center">
-              <p className="font-display text-4xl">WebInvite</p>
-              <p className="mt-3 text-sm" style={{ color: "var(--muted)" }}>premium taklifnomalar — tez orada</p>
-            </div>
-          </div>
-        }
-      />
-    </Routes>
+    <LangProvider>
+      <AuthProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/templates" element={<Templates />} />
+          </Route>
+          <Route path="*" element={<div className="p-24 text-center text-sm">404 — sahifa topilmadi</div>} />
+        </Routes>
+      </AuthProvider>
+    </LangProvider>
   );
 }

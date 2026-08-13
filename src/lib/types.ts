@@ -1,4 +1,5 @@
 export type Invite = {
+  category: string;
   id: string;
   user_id: string | null;
   slug: string;

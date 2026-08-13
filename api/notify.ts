@@ -23,6 +23,10 @@ export default async function handler(req: any, res: any) {
     text = `💌 <b>Yangi tilak bildirildi!</b>\n\n📌 Taklifnoma: ${inv.name}\n👤 Mehmon: ${guest_name ?? ""}\n💬 Tilak: "${message ?? ""}"`;
     buttons = { inline_keyboard: [[{ text: "👁 Tilaklarni ko'rish", url: `${SITE}/i/${inv.slug}` }]] };
   }
+  if (action === "payment") {
+    text = `💳 <b>To'lov cheki yuborildi!</b>\n\n📌 Taklifnoma: ${inv.name}\n\nChekni Telegram'da tekshiring va to'lov tasdiqlangach faollashtiring.`;
+    buttons = { inline_keyboard: [[{ text: "⚡ Faollashtirish (/admin)", url: `${SITE}/admin` }]] };
+  }
 
   if (text) {
     await fetch(`${TG}/sendMessage`, {

@@ -6,6 +6,8 @@ import Home from "@/pages/Home";
 import Templates from "@/pages/Templates";
 import PreviewFrame from "@/pages/PreviewFrame";
 import InvitePage from "@/pages/Invite";
+import Create from "@/pages/Create";
+import My from "@/pages/My";
 
 export default function App() {
   return (
@@ -15,6 +17,8 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/templates" element={<Templates />} />
+            <Route path="/create/:templateId" element={<Create />} />
+            <Route path="/my" element={<My />} />
           </Route>
           <Route path="/templates/:id/preview-frame" element={<PreviewFrame />} />
           <Route path="/i/:slug" element={<InvitePage />} />

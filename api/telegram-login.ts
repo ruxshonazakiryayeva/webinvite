@@ -29,6 +29,10 @@ export default async function handler(req: any, res: any) {
       s = await anon.auth.signInWithPassword({ email, password });
     }
     if (s.error || !s.data.session) return res.status(500).json({ error: s.error?.message });
+
+    // Foydalanuvchini Telegram'ga bog'laymiz (bildirishnomalar uchun)
+    await sb.from("user_links").upsert({ user_id: s.data.user.id, tg_id: data.tg_id });
+
     return res.json({
       status: "approved",
       session: { access_token: s.data.session.access_token, refresh_token: s.data.session.refresh_token },

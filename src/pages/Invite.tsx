@@ -28,7 +28,7 @@ export default function InvitePage() {
   if (state === "loading") return <div className="grid min-h-screen place-items-center text-sm" style={{ color: "var(--muted)" }}>{t("loading")}</div>;
   if (state === "bad" || !inv) return <div className="grid min-h-screen place-items-center text-sm">404 — taklifnoma topilmadi</div>;
 
-  const locked = !inv.is_activated && inv.views > inv.views_limit;
+  const locked = !inv.is_activated && inv.views >= inv.views_limit;
   if (locked) return <Paywall inv={inv} lang={lang} />;
 
   const C = templateComponents[inv.template_id];

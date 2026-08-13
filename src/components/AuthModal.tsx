@@ -1,56 +1,24 @@
-import { useState, type FormEvent } from "react";
-import { supabase } from "@/lib/supabase";
 import { useLang } from "@/lib/i18n";
 import TelegramLogin from "./TelegramLogin";
 
+const L = {
+  uz: "Davom etish uchun Telegram orqali kiring",
+  ru: "Войдите через Telegram, чтобы продолжить",
+  en: "Sign in with Telegram to continue",
+};
+
 export default function AuthModal({ onClose }: { onClose: () => void }) {
-  const { t } = useLang();
-  const [mode, setMode] = useState<"login" | "signup">("login");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [err, setErr] = useState("");
-  const [busy, setBusy] = useState(false);
-
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
-    setBusy(true); setErr("");
-    const { error } = mode === "login"
-      ? await supabase.auth.signInWithPassword({ email, password: pass })
-      : await supabase.auth.signUp({ email, password: pass });
-    setBusy(false);
-    if (error) { setErr(error.message); return; }
-    onClose();
-  };
-
+  const { lang, t } = useLang();
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" onClick={onClose}>
-      <div className="card w-full max-w-sm p-6" onClick={(e) => e.stopPropagation()}>
-        <p className="font-display text-2xl">{mode === "login" ? t("au_login_t") : t("au_signup_t")}</p>
-        <form onSubmit={submit} className="mt-4 space-y-3">
-          <div>
-            <label className="label">{t("au_email")}</label>
-            <input className="input" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-          <div>
-            <label className="label">{t("au_pass")}</label>
-            <input className="input" type="password" required minLength={6} value={pass} onChange={(e) => setPass(e.target.value)} />
-          </div>
-          {err && <p className="text-xs" style={{ color: "hsl(0 70% 45%)" }}>{err}</p>}
-          <button className="btn-gold w-full" disabled={busy}>
-            {mode === "login" ? t("au_login_t") : t("au_signup_t")}
-          </button>
-        </form>
-
-        <div className="my-4 flex items-center gap-3 text-[11px] uppercase tracking-widest" style={{ color: "var(--muted)" }}>
-          <span className="h-px flex-1" style={{ background: "var(--line)" }} />yoki<span className="h-px flex-1" style={{ background: "var(--line)" }} />
+      <div className="card w-full max-w-sm p-6 text-center" onClick={(e) => e.stopPropagation()}>
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full"
+          style={{ background: "hsl(42 70% 55% / .15)", color: "var(--gold)", fontSize: 22 }}>✉</div>
+        <p className="font-display mt-4 text-2xl">{t("au_login_t")}</p>
+        <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>{L[lang]}</p>
+        <div className="mt-6">
+          <TelegramLogin onDone={onClose} />
         </div>
-
-        <TelegramLogin onDone={onClose} />
-
-        <button className="mt-4 text-xs underline" style={{ color: "var(--muted)" }}
-          onClick={() => setMode(mode === "login" ? "signup" : "login")}>
-          {mode === "login" ? t("au_switch") : t("au_switch2")}
-        </button>
       </div>
     </div>
   );

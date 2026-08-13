@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/lib/i18n";
+import TelegramLogin from "./TelegramLogin";
 
 export default function AuthModal({ onClose }: { onClose: () => void }) {
   const { t } = useLang();
@@ -39,6 +40,13 @@ export default function AuthModal({ onClose }: { onClose: () => void }) {
             {mode === "login" ? t("au_login_t") : t("au_signup_t")}
           </button>
         </form>
+
+        <div className="my-4 flex items-center gap-3 text-[11px] uppercase tracking-widest" style={{ color: "var(--muted)" }}>
+          <span className="h-px flex-1" style={{ background: "var(--line)" }} />yoki<span className="h-px flex-1" style={{ background: "var(--line)" }} />
+        </div>
+
+        <TelegramLogin onDone={onClose} />
+
         <button className="mt-4 text-xs underline" style={{ color: "var(--muted)" }}
           onClick={() => setMode(mode === "login" ? "signup" : "login")}>
           {mode === "login" ? t("au_switch") : t("au_switch2")}

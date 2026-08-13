@@ -14,6 +14,13 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg)", color: "var(--ink)" }}>
+      <div className="border-b px-4 py-2 text-center text-xs font-semibold"
+        style={{ background: "hsl(42 70% 55% / .12)", borderColor: "var(--line)" }}>
+        ✨ {lang === "ru" ? "Новые эксклюзивные шаблоны! Следите за нами:" : lang === "en" ? "New exclusive templates! Follow us:" : "Yangi eksklyuziv shablonlar! Bizni kuzating:"}{" "}
+        <a className="underline" style={{ color: "var(--gold)" }} href="https://t.me/webinvite_uz" target="_blank" rel="noreferrer">Telegram</a> •{" "}
+        <a className="underline" style={{ color: "var(--gold)" }} href="https://instagram.com/webinvite.uz" target="_blank" rel="noreferrer">Instagram</a>
+      </div>
+
       <header className="sticky top-0 z-40 border-b backdrop-blur"
         style={{ borderColor: "var(--line)", background: "color-mix(in oklab, var(--bg) 82%, transparent)" }}>
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
@@ -37,11 +44,11 @@ export default function Layout() {
             </div>
             {session ? (
               <>
-                <Link to="/my" className="btn-ghost !py-2 !px-3 text-xs">{t("nav_my")}</Link>
-                <button className="btn-ghost !py-2 !px-3 text-xs" onClick={() => supabase.auth.signOut()}>{t("nav_logout")}</button>
+                <Link to="/my" className="btn-ghost !px-3 !py-2 text-xs">{t("nav_my")}</Link>
+                <button className="btn-ghost !px-3 !py-2 text-xs" onClick={() => supabase.auth.signOut()}>{t("nav_logout")}</button>
               </>
             ) : (
-              <button className="btn-gold !py-2 !px-4 text-xs" onClick={() => setAuthOpen(true)}>{t("nav_login")}</button>
+              <button className="btn-gold !px-4 !py-2 text-xs" onClick={() => setAuthOpen(true)}>{t("nav_login")}</button>
             )}
           </div>
         </div>

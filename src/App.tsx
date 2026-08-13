@@ -8,6 +8,7 @@ import PreviewFrame from "@/pages/PreviewFrame";
 import InvitePage from "@/pages/Invite";
 import Create from "@/pages/Create";
 import My from "@/pages/My";
+import Admin from "@/pages/Admin";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/templates" element={<Templates />} />
             <Route path="/create/:templateId" element={<Create />} />
             <Route path="/my" element={<My />} />
+            <Route path="/admin" element={<Admin />} />
           </Route>
           <Route path="/templates/:id/preview-frame" element={<PreviewFrame />} />
           <Route path="/i/:slug" element={<InvitePage />} />

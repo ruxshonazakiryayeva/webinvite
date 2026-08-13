@@ -168,6 +168,12 @@ export function TWishes({ inviteId }: { inviteId: string }) {
     e.preventDefault();
     if (!name.trim() || !msg.trim()) return;
     await addWish(inviteId, name.trim(), msg.trim());
+    // 👇 Egaga bot orqali bildirishnoma
+    fetch("/api/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "wish", invite_id: inviteId, guest_name: name.trim(), message: msg.trim() }),
+    });
     setItems((p) => [{ id: crypto.randomUUID(), guest_name: name.trim(), message: msg.trim(), created_at: new Date().toISOString() }, ...p]);
     setName(""); setMsg(""); setSent(true); setTimeout(() => setSent(false), 2500);
   };
@@ -200,9 +206,10 @@ export function TRsvp({ inviteId }: { inviteId: string }) {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (!name.trim() || attend === null) { setErr(t("f_name") + " + " + t("rsvp_title")); return; }
-    const { error } = await addRsvp({ invite_id: inviteId, guest_name: name.trim(), will_attend: attend, adults_count: adults, kids_count: kids, allergies: note.trim() || null }).then(() => ({ error: null })).catch(() => ({ error: true }));
-    if (error) { setErr(t("au_err")); return; }
-    setDone(true);
+    try {
+      await addRsvp({ invite_id: inviteId, guest_name: name.trim(), will_attend: attend, adults_count: adults, kids_count: kids, allergies: note.trim() || null });
+      setDone(true);
+    } catch { setErr(t("au_err")); }
   };
   if (done) return (
     <div className="t-card p-8 text-center">

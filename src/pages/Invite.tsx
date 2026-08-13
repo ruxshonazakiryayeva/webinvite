@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchInvite } from "@/lib/invites";
 import { templateComponents } from "@/templates";
+import { setSeo } from "@/lib/seo";
 import type { Invite } from "@/lib/types";
 import { useLang } from "@/lib/i18n";
 
@@ -15,7 +16,12 @@ export default function InvitePage() {
     fetchInvite(slug!)
       .then((d) => {
         if (!d || !d.is_active) return setState("bad");
-        setInv(d); document.title = `${d.name} — WebInvite`; setState("ok");
+        setInv(d); setState("ok");
+        setSeo({
+          title: `${d.name} — WebInvite`,
+          description: d.message ?? `${d.name} • WebInvite`,
+          image: d.cover_image_url ?? d.gallery_urls?.[0],
+        });
       })
       .catch(() => setState("bad"));
   }, [slug]);

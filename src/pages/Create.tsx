@@ -127,4 +127,23 @@ export default function Create() {
                 </div>
               ))}
               {newFiles.map((file, i) => (
-                <div key={file.name + i}
+                <div key={file.name + i} className="relative">
+                  <span className="grid h-16 w-16 place-items-center rounded-lg border text-lg" style={{ borderColor: "var(--line)" }}>+</span>
+                  <button className="absolute -right-1 -top-1 h-5 w-5 rounded-full bg-black/70 text-[10px] text-white" onClick={() => setNewFiles((p) => p.filter((_, j) => j !== i))}>✕</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div>
+          <label className="label">{t("ed_music")}</label>
+          <input type="file" accept="audio/*" className="input" onChange={(e) => setMusicFile(e.target.files?.[0] ?? null)} />
+          {musicUrl && <p className="mt-1 text-xs" style={{ color: "var(--muted)" }}>♫ musiqa biriktirilgan</p>}
+        </div>
+        <button className="btn-gold w-full" disabled={busy} onClick={onSave}>{busy ? "..." : t("ed_save")}</button>
+        {!session && <p className="text-center text-xs" style={{ color: "var(--muted)" }}>{t("ed_need_auth")}</p>}
+      </div>
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+    </main>
+  );
+}

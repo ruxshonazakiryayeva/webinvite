@@ -1,5 +1,4 @@
 export type Invite = {
-  category: string;
   id: string;
   user_id: string | null;
   slug: string;
@@ -20,6 +19,7 @@ export type Invite = {
   card_owner: string | null;
   data: Record<string, unknown>;
   is_active: boolean;
+  category: string;
   created_at: string;
   updated_at: string;
 };

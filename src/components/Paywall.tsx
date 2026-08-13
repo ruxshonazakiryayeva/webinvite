@@ -9,9 +9,9 @@ const PRICE = 49000;
 const PROMOS: Record<string, number> = { WEBINVITE50: 50, START25: 25 };
 
 const L = {
-  uz: { title: "Bepul ko'rishlar tugadi", sub: "Bu taklifnoma bepul limitdan o'tdi. Mehmonlar davom etishi uchun faollashtirish kerak.", views: "Bepul ko'rishlar", price: "Faollashtirish narxi", promo: "Promo-kod", apply: "Qo'llash", pay: "To'lov qilish", guide: "To'lov yo'riqnomasi", note: "To'lovdan so'ng chekni Telegramga yuboring — taklifnoma faollashtiriladi.", sent: "Chekni yubordim", wrong: "Promo-kod noto'g'ri" },
-  ru: { title: "Бесплатные просмотры закончились", sub: "Это приглашение превысило бесплатный лимит. Для продолжения нужна активация.", views: "Бесплатные просмотры", price: "Цена активации", promo: "Промо-код", apply: "Применить", pay: "Оплатить", guide: "Инструкция оплаты", note: "После оплаты отправьте чек в Telegram — приглашение будет активировано.", sent: "Я отправил чек", wrong: "Неверный промо-код" },
-  en: { title: "Free views are over", sub: "This invitation exceeded the free limit. Activation is required to continue.", views: "Free views", price: "Activation price", promo: "Promo code", apply: "Apply", pay: "Pay", guide: "Payment guide", note: "After payment, send the receipt via Telegram — the invitation will be activated.", sent: "I sent the receipt", wrong: "Invalid promo code" },
+  uz: { title: "Bepul ko'rishlar tugadi", sub: "Bu taklifnoma bepul limitdan o'tdi. Mehmonlar davom etishi uchun faollashtirish kerak.", views: "Bepul ko'rishlar", price: "Faollashtirish narxi", promo: "Promo-kod", apply: "Qo'llash", pay: "To'lov qilish", guide: "To'lov yo'riqnomasi", note: "To'lovdan so'ng chekni Telegramga yuboring — taklifnoma faollashtiriladi.", sent: "Chekni yubordim", wrong: "Promo-kod noto'g'ri", sendNote: "Xabarda taklifnoma nomini yozing:" },
+  ru: { title: "Бесплатные просмотры закончились", sub: "Это приглашение превысило бесплатный лимит. Для продолжения нужна активация.", views: "Бесплатные просмотры", price: "Цена активации", promo: "Промо-код", apply: "Применить", pay: "Оплатить", guide: "Инструкция оплаты", note: "После оплаты отправьте чек в Telegram — приглашение будет активировано.", sent: "Я отправил чек", wrong: "Неверный промо-код", sendNote: "В сообщении укажите название приглашения:" },
+  en: { title: "Free views are over", sub: "This invitation exceeded the free limit. Activation is required to continue.", views: "Free views", price: "Activation price", promo: "Promo code", apply: "Apply", pay: "Pay", guide: "Payment guide", note: "After payment, send the receipt via Telegram — the invitation will be activated.", sent: "I sent the receipt", wrong: "Invalid promo code", sendNote: "In your message, mention the invitation name:" },
 };
 
 export default function Paywall({ inv, lang }: { inv: Invite; lang: "uz" | "ru" | "en" }) {
@@ -26,6 +26,16 @@ export default function Paywall({ inv, lang }: { inv: Invite; lang: "uz" | "ru" 
     const d = PROMOS[promo.trim().toUpperCase()];
     if (!d) { setErr(t.wrong); return; }
     setDisc(d); setErr("");
+  };
+
+  const sendChek = () => {
+    // Egasiga bildirishnoma
+    fetch("/api/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "payment", invite_id: inv.id }),
+    });
+    window.open(TG_CHEK, "_blank");
   };
 
   return (
@@ -65,7 +75,10 @@ export default function Paywall({ inv, lang }: { inv: Invite; lang: "uz" | "ru" 
             <p className="mt-2 font-mono text-lg" style={{ color: "var(--gold)" }}>{CARD_NUMBER}</p>
             <p className="text-xs" style={{ color: "var(--muted)" }}>{CARD_OWNER}</p>
             <p className="mt-3 text-xs" style={{ color: "var(--muted)" }}>{t.note}</p>
-            <a className="btn-gold mt-4 block w-full text-center" href={TG_CHEK} target="_blank" rel="noreferrer">✈ {t.sent}</a>
+            <p className="mt-3 text-[11px] font-semibold" style={{ color: "var(--ink)" }}>
+              {t.sendNote} <b style={{ color: "var(--gold)" }}>{inv.name}</b>
+            </p>
+            <button className="btn-gold mt-3 w-full" onClick={sendChek}>✈ {t.sent}</button>
             <button className="btn-ghost mt-2 w-full !py-2 text-xs" onClick={() => setGuide(false)}>←</button>
           </div>
         )}

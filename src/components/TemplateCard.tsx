@@ -9,6 +9,11 @@ const badgeStyle = {
   popular: { bg: "hsl(210 70% 45%)", label: { uz: "Ommabop", ru: "Популярный", en: "Popular" } },
 };
 
+const FEATURES = [
+  { icon: "📱", label: "Mobil" }, { icon: "🌍", label: "3 til" }, { icon: "📍", label: "Xarita" },
+  { icon: "⏳", label: "Taymer" }, { icon: "📩", label: "RSVP" },
+];
+
 export default function TemplateCard({ tp }: { tp: TemplateMeta }) {
   const { t, lang } = useLang();
   return (
@@ -28,6 +33,13 @@ export default function TemplateCard({ tp }: { tp: TemplateMeta }) {
       <div className="p-5">
         <p className="font-display text-xl">{tp.name}</p>
         <p className="mt-1 text-sm" style={{ color: "var(--muted)" }}>{tp.tagline[lang]}</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {FEATURES.map((f) => (
+            <span key={f.icon} className="rounded-full border px-2 py-0.5 text-[10px]" style={{ borderColor: "var(--line)", color: "var(--muted)" }} title={f.label}>
+              {f.icon} {f.label}
+            </span>
+          ))}
+        </div>
         <div className="mt-4 flex gap-2">
           <Link to={`/templates/${tp.id}/preview-frame`} className="btn-ghost flex-1 !py-2 text-xs">{t("btn_preview")}</Link>
           <Link to={`/create/${tp.id}`} className="btn-gold flex-1 !py-2 text-xs">{t("btn_create")}</Link>
